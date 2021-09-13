@@ -21,15 +21,11 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet.Utils;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Ocsp;
-using Org.BouncyCastle.Asn1.Pkcs;
 using Org.BouncyCastle.Asn1.X509;
-using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Ocsp;
-using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
 using System;
 using System.Collections;
@@ -37,8 +33,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
+using Xades.NetCore.Utils;
 
-namespace FirmaXadesNet.Clients
+namespace Xades.NetCore.Clients
 {
     public enum CertificateStatus { Good = 0, Revoked = 1, Unknown = 2 };
 
@@ -99,12 +96,12 @@ namespace FirmaXadesNet.Clients
                     if (oid.Id.Equals("1.3.6.1.5.5.7.48.1")) // Is Ocsp? 
                     {
                         Asn1TaggedObject taggedObject = (Asn1TaggedObject)element[1];
-                        GeneralName gn = (GeneralName)GeneralName.GetInstance(taggedObject);
-                        ocspUrls.Add(((DerIA5String)DerIA5String.GetInstance(gn.Name)).GetString());
+                        GeneralName gn = GeneralName.GetInstance(taggedObject);
+                        ocspUrls.Add(DerIA5String.GetInstance(gn.Name).GetString());
                     }
                 }
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }
@@ -147,11 +144,11 @@ namespace FirmaXadesNet.Clients
                     {
                         cStatus = CertificateStatus.Good;
                     }
-                    else if (certificateStatus is Org.BouncyCastle.Ocsp.RevokedStatus)
+                    else if (certificateStatus is RevokedStatus)
                     {
                         cStatus = CertificateStatus.Revoked;
                     }
-                    else if (certificateStatus is Org.BouncyCastle.Ocsp.UnknownStatus)
+                    else if (certificateStatus is UnknownStatus)
                     {
                         cStatus = CertificateStatus.Unknown;
                     }
@@ -240,7 +237,7 @@ namespace FirmaXadesNet.Clients
             ocspRequestGenerator.AddRequest(id);
 
             if (requestorName != null)
-            {                
+            {
                 ocspRequestGenerator.SetRequestorName(requestorName);
             }
 

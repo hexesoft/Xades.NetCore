@@ -21,15 +21,15 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet.Signature;
-using FirmaXadesNet.Upgraders.Parameters;
-using FirmaXadesNet.Utils;
 using Microsoft.Xades;
 using System;
 using System.Collections;
 using System.Security.Cryptography.Xml;
+using Xades.NetCore.Signature;
+using Xades.NetCore.Upgraders.Parameters;
+using Xades.NetCore.Utils;
 
-namespace FirmaXadesNet.Upgraders
+namespace Xades.NetCore.Upgraders
 {
     class XadesTUpgrader : IXadesUpgrader
     {

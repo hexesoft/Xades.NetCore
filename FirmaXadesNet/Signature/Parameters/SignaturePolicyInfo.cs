@@ -21,14 +21,9 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet.Crypto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Xades.NetCore.Crypto;
 
-namespace FirmaXadesNet.Signature.Parameters
+namespace Xades.NetCore.Signature.Parameters
 {
     public class SignaturePolicyInfo
     {
@@ -54,7 +49,7 @@ namespace FirmaXadesNet.Signature.Parameters
 
         public SignaturePolicyInfo()
         {
-            this.PolicyDigestAlgorithm = _defaultPolicyDigestAlgorithm;
+            PolicyDigestAlgorithm = _defaultPolicyDigestAlgorithm;
         }
 
         #endregion

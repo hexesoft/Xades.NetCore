@@ -21,8 +21,7 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-
-namespace FirmaXadesNet.Validation
+namespace Xades.NetCore.Validation
 {
     public class ValidationResult
     {

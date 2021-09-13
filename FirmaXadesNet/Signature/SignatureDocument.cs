@@ -21,15 +21,15 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet.Utils;
 using Microsoft.Xades;
 using System;
 using System.IO;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
+using Xades.NetCore.Utils;
 
-namespace FirmaXadesNet.Signature
+namespace Xades.NetCore.Signature
 {
     public class SignatureDocument
     {
@@ -37,7 +37,7 @@ namespace FirmaXadesNet.Signature
 
         private XadesSignedXml _xadesSignedXml;
         private XmlDocument _document;
-        
+
         #endregion
 
         #region Public properties
@@ -67,7 +67,7 @@ namespace FirmaXadesNet.Signature
                 _xadesSignedXml = value;
             }
         }
-        
+
         #endregion
 
         #region Public methods
@@ -96,7 +96,7 @@ namespace FirmaXadesNet.Signature
             settings.Encoding = new UTF8Encoding();
             using (var writer = XmlWriter.Create(fileName, settings))
             {
-                this.Document.Save(writer);
+                Document.Save(writer);
             }
         }
 
@@ -110,7 +110,7 @@ namespace FirmaXadesNet.Signature
             settings.Encoding = new UTF8Encoding();
             using (var writer = XmlWriter.Create(output, settings))
             {
-                this.Document.Save(writer);
+                Document.Save(writer);
             }
         }
 
@@ -205,7 +205,7 @@ namespace FirmaXadesNet.Signature
             {
                 throw new ArgumentNullException("sigDocument");
             }
-            
+
             if (sigDocument.Document == null || sigDocument.XadesSignature == null)
             {
                 throw new Exception("No existe información sobre la firma");

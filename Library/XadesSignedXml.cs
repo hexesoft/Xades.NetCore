@@ -1776,7 +1776,7 @@ namespace Microsoft.Xades
                     foreach (DataObject dataObject in this.m_signature.ObjectList)
                     {
                         XmlNode idAttribute = dataObject.Data[0].Attributes.GetNamedItem("Id");
-                        if (idAttribute != null && 
+                        if (idAttribute != null &&
                             idAttribute.Value == manifestId)
                         {
                             XmlElement dataObjectXml = dataObject.GetXml();

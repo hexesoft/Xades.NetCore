@@ -29,7 +29,7 @@ using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
 
-namespace FirmaXadesNet.Utils
+namespace Xades.NetCore.Utils
 {
     class XMLUtil
     {
@@ -102,7 +102,7 @@ namespace FirmaXadesNet.Utils
                     {
                         XmlElement clonedElement = (XmlElement)xmlNode.Clone();
 
-                        clonedElement.SetAttribute("xmlns:" + XadesSignedXml.XmlDSigPrefix, XadesSignedXml.XmlDsigNamespaceUrl);
+                        clonedElement.SetAttribute("xmlns:" + XadesSignedXml.XmlDSigPrefix, SignedXml.XmlDsigNamespaceUrl);
 
                         foreach (var attr in namespaces)
                         {

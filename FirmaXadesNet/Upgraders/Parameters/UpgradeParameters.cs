@@ -21,13 +21,13 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet.Clients;
-using FirmaXadesNet.Crypto;
 using Org.BouncyCastle.X509;
 using System.Collections.Generic;
 using System.IO;
+using Xades.NetCore.Clients;
+using Xades.NetCore.Crypto;
 
-namespace FirmaXadesNet.Upgraders.Parameters
+namespace Xades.NetCore.Upgraders.Parameters
 {
     public class UpgradeParameters
     {

@@ -21,10 +21,9 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet.Crypto;
-using System;
+using Xades.NetCore.Crypto;
 
-namespace FirmaXadesNet.Clients
+namespace Xades.NetCore.Clients
 {
     public interface ITimeStampClient
     {

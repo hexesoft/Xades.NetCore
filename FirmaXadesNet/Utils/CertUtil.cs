@@ -21,15 +21,11 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 #pragma warning disable CA1416
-using Org.BouncyCastle.Crypto.Parameters;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FirmaXadesNet.Utils
+namespace Xades.NetCore.Utils
 {
     public class CertUtil
     {
@@ -49,8 +45,8 @@ namespace FirmaXadesNet.Utils
 
             if (!chain.Build(certificate))
             {
-			    //TODO: Localize
-			    throw new Exception("Can not build certification chain");
+                //TODO: Localize
+                throw new Exception("Can not build certification chain");
                 // throw new Exception("No se puede construir la cadena de certificación");
             }
 
@@ -71,8 +67,8 @@ namespace FirmaXadesNet.Utils
                 X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
                 store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
 
-                X509Certificate2Collection collection = (X509Certificate2Collection)store.Certificates;
-                X509Certificate2Collection fcollection = (X509Certificate2Collection)collection.Find(X509FindType.FindByTimeValid, DateTime.Now, false);
+                X509Certificate2Collection collection = store.Certificates;
+                X509Certificate2Collection fcollection = collection.Find(X509FindType.FindByTimeValid, DateTime.Now, false);
 
                 if (string.IsNullOrEmpty(message))
                 {
@@ -133,13 +129,13 @@ namespace FirmaXadesNet.Utils
             if (!isChainValid)
             {
                 string[] errors = chain.ChainStatus
-                    .Select(x => String.Format("{0} ({1})", x.StatusInformation.Trim(), x.Status))
+                    .Select(x => string.Format("{0} ({1})", x.StatusInformation.Trim(), x.Status))
                     .ToArray();
                 string certificateErrorsString = "Unknown errors.";
 
                 if (errors != null && errors.Length > 0)
                 {
-                    certificateErrorsString = String.Join(", ", errors);
+                    certificateErrorsString = string.Join(", ", errors);
                 }
 
                 throw new Exception("Trust chain did not complete to the known authority anchor. Errors: " + certificateErrorsString);

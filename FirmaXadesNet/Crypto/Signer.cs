@@ -21,14 +21,11 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-#pragma warning disable CA1416
-
 using System;
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
-namespace FirmaXadesNet.Crypto
+namespace Xades.NetCore.Crypto
 {
     public class Signer : IDisposable
     {
@@ -68,7 +65,7 @@ namespace FirmaXadesNet.Crypto
             {
                 throw new ArgumentNullException("certificate");
             }
-            
+
             if (!certificate.HasPrivateKey)
             {
                 throw new Exception("El certificado no contiene ninguna clave privada");
@@ -97,33 +94,40 @@ namespace FirmaXadesNet.Crypto
 
         private void SetSigningKey(X509Certificate2 certificate)
         {
-            var key = (RSACryptoServiceProvider)certificate.PrivateKey;
+            _signingKey = certificate.PrivateKey!;
+            _disposeCryptoProvider = false;
 
-            if (key.CspKeyContainerInfo.ProviderName == CryptoConst.MS_STRONG_PROV ||
-                key.CspKeyContainerInfo.ProviderName == CryptoConst.MS_ENHANCED_PROV ||
-                key.CspKeyContainerInfo.ProviderName == CryptoConst.MS_DEF_PROV || 
-                key.CspKeyContainerInfo.ProviderName == CryptoConst.MS_DEF_RSA_SCHANNEL_PROV)
-            {
-                Type CspKeyContainerInfo_Type = typeof(CspKeyContainerInfo);
+            // Note: In .net core the certificate keys have platform specific implementation
+            //       and cast to RSACryptoServiceProvider in windows environemnt is no longer possible.
+            // See: https://stackoverflow.com/a/49777672
+            // See: https://stackoverflow.com/a/60103275
 
-                FieldInfo CspKeyContainerInfo_m_parameters = CspKeyContainerInfo_Type.GetField("m_parameters", BindingFlags.NonPublic | BindingFlags.Instance);
-                CspParameters parameters = (CspParameters)CspKeyContainerInfo_m_parameters.GetValue(key.CspKeyContainerInfo);
+            // TODO: Investigate if necessary
+            // var key = (RSACryptoServiceProvider)certificate.PrivateKey;
+            // if (key.CspKeyContainerInfo.ProviderName == CryptoConst.MS_STRONG_PROV ||
+            //     key.CspKeyContainerInfo.ProviderName == CryptoConst.MS_ENHANCED_PROV ||
+            //     key.CspKeyContainerInfo.ProviderName == CryptoConst.MS_DEF_PROV || 
+            //     key.CspKeyContainerInfo.ProviderName == CryptoConst.MS_DEF_RSA_SCHANNEL_PROV)
+            // {
+            //     Type CspKeyContainerInfo_Type = typeof(CspKeyContainerInfo);
 
-                var cspparams = new CspParameters(CryptoConst.PROV_RSA_AES, CryptoConst.MS_ENH_RSA_AES_PROV, key.CspKeyContainerInfo.KeyContainerName);
-                cspparams.KeyNumber = parameters.KeyNumber;
-                cspparams.Flags = parameters.Flags;
-                _signingKey = new RSACryptoServiceProvider(cspparams);
+            //     FieldInfo CspKeyContainerInfo_m_parameters = CspKeyContainerInfo_Type.GetField("m_parameters", BindingFlags.NonPublic | BindingFlags.Instance);
+            //     CspParameters parameters = (CspParameters)CspKeyContainerInfo_m_parameters.GetValue(key.CspKeyContainerInfo);
 
-                _disposeCryptoProvider = true;
-            }
-            else
-            {
-                _signingKey = key;
-                _disposeCryptoProvider = false;
-            }
+            //     var cspparams = new CspParameters(CryptoConst.PROV_RSA_AES, CryptoConst.MS_ENH_RSA_AES_PROV, key.CspKeyContainerInfo.KeyContainerName);
+            //     cspparams.KeyNumber = parameters.KeyNumber;
+            //     cspparams.Flags = parameters.Flags;
+            //     _signingKey = new RSACryptoServiceProvider(cspparams);
+
+            //     _disposeCryptoProvider = true;
+            // }
+            // else
+            // {
+            //     _signingKey = key;
+            //     _disposeCryptoProvider = false;
+            // }
         }
 
         #endregion
     }
 }
-#pragma warning restore CA1416

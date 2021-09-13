@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<Authors>Hexesoft srl</Authors>
+		<Copyright>Hexesoft srl, Giacomo Policicchio, Centro de Transferencia de Tecnología - Forja CTT</Copyright>
+		<Description>Library with utilities for XAdES signature. Private hexesoft project forked from https://github.com/pgiacomo69/Xades.NetCore</Description>
+		<AssemblyName>Xades.NetCore</AssemblyName>
+		<RootNamespace>Xades.NetCore</RootNamespace>
+		<Nullable>annotations</Nullable>
+		<LangVersion>9.0</LangVersion>
+		<Version>1.0.0.1</Version>
+		<PackageId>Hexesoft.Xades.NetCore</PackageId>
+		<PackageProjectUrl>https://github.com/hexesoft/Xades.NetCore</PackageProjectUrl>
+		<PackageVersion>1.0.0.1</PackageVersion>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/hexesoft/Xades.NetCore</RepositoryUrl>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<NoPackageAnalysis>true</NoPackageAnalysis>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Library\Microsoft.Xades.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="BouncyCastle.NetCore" Version="1.8.8" />
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="System.Data.DataSetExtensions" Version="4.6.0-preview3.19128.7" />
+		<PackageReference Include="System.Security.Cryptography.Xml" Version="5.0.0" />
+	</ItemGroup>
+
+	<Target Name="MyCustomizePacking" Returns="@(NuGetPackInput);@(_BuildOutputInPackage);@(_TargetPathsToSymbols)">
+		<ItemGroup>
+			<NuGetPackInput Remove="@(BuiltProjectOutputGroupKeyOutput);@(DebugSymbolsProjectOutputGroupOutput)"/>
+			<_BuildOutputInPackage Remove="@(BuiltProjectOutputGroupKeyOutput)"/>
+			<_TargetPathsToSymbols Remove="@(DebugSymbolsProjectOutputGroupOutput)"/>
+
+			<NuGetPackInput Include="@(ReferenceCopyLocalPaths);@(AllItemsFullPathWithTargetPath)" />
+			<_BuildOutputInPackage Include="%(ReferenceCopyLocalPaths.Identity)" >
+				<TargetFramework>$(TargetFramework)</TargetFramework>
+			</_BuildOutputInPackage>
+			<_BuildOutputInPackage Include="%(AllItemsFullPathWithTargetPath.Identity)" >
+				<TargetFramework>$(TargetFramework)</TargetFramework>
+			</_BuildOutputInPackage>
+		</ItemGroup>
+	</Target>
+</Project>

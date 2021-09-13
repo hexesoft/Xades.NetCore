@@ -21,22 +21,15 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet;
-using FirmaXadesNet.Crypto;
-using FirmaXadesNet.Signature;
-using FirmaXadesNet.Signature.Parameters;
-using FirmaXadesNet.Utils;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using Xades.NetCore;
+using Xades.NetCore.Crypto;
+using Xades.NetCore.Signature;
+using Xades.NetCore.Signature.Parameters;
+using Xades.NetCore.Utils;
 
 namespace DemoFirmaElemento
 {
@@ -50,14 +43,14 @@ namespace DemoFirmaElemento
         private void btnFirmar_Click(object sender, EventArgs e)
         {
             XadesService xadesService = new XadesService();
-            SignatureParameters parametros = new SignatureParameters();            
+            SignatureParameters parametros = new SignatureParameters();
 
             string ficheroXml = Application.StartupPath + "\\xsdBOE-A-2011-13169_ex_XAdES_Internally_detached.xml";
 
             XmlDocument documento = new XmlDocument();
             documento.Load(ficheroXml);
 
-            parametros.SignatureDestination = new SignatureXPathExpression();            
+            parametros.SignatureDestination = new SignatureXPathExpression();
             parametros.SignatureDestination.Namespaces.Add("enidoc", "http://administracionelectronica.gob.es/ENI/XSD/v1.0/documento-e");
             parametros.SignatureDestination.Namespaces.Add("enidocmeta", "http://administracionelectronica.gob.es/ENI/XSD/v1.0/documento-e/metadatos");
             parametros.SignatureDestination.Namespaces.Add("enids", "http://administracionelectronica.gob.es/ENI/XSD/v1.0/firma");
@@ -66,11 +59,11 @@ namespace DemoFirmaElemento
             parametros.SignaturePackaging = SignaturePackaging.INTERNALLY_DETACHED;
             parametros.ElementIdToSign = "CONTENT-12ef114d-ac6c-4da3-8caf-50379ed13698";
             parametros.DataFormat = new DataFormat();
-            parametros.DataFormat.MimeType = "text/xml";     
+            parametros.DataFormat.MimeType = "text/xml";
 
             SignatureDocument documentoFirma;
 
-            using (parametros.Signer = new Signer(FirmaXadesNet.Utils.CertUtil.SelectCertificate()))
+            using (parametros.Signer = new Signer(CertUtil.SelectCertificate()))
             {
                 using (FileStream fs = new FileStream(ficheroXml, FileMode.Open))
                 {

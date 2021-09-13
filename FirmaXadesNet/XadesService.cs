@@ -21,10 +21,10 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet.Signature;
-using FirmaXadesNet.Signature.Parameters;
-using FirmaXadesNet.Utils;
-using FirmaXadesNet.Validation;
+using Xades.NetCore.Signature;
+using Xades.NetCore.Signature.Parameters;
+using Xades.NetCore.Utils;
+using Xades.NetCore.Validation;
 using Microsoft.Xades;
 using System;
 using System.Collections.Generic;
@@ -35,7 +35,7 @@ using System.Security.Cryptography.Xml;
 using System.Xml;
 
 
-namespace FirmaXadesNet
+namespace Xades.NetCore
 {
 
     public class XadesService

@@ -21,15 +21,15 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet.Crypto;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Tsp;
 using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using Xades.NetCore.Crypto;
 
-namespace FirmaXadesNet.Clients
+namespace Xades.NetCore.Clients
 {
     public class TimeStampClient : ITimeStampClient
     {

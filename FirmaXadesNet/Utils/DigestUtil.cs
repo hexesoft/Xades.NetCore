@@ -22,22 +22,14 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using Microsoft.Xades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using FirmaXadesNet.Crypto;
 
-namespace FirmaXadesNet.Utils
+namespace Xades.NetCore.Utils
 {
     class DigestUtil
     {
         #region Public methods
 
-        public static void SetCertDigest(byte[] rawCert, FirmaXadesNet.Crypto.DigestMethod digestMethod, DigestAlgAndValueType destination)
+        public static void SetCertDigest(byte[] rawCert, Crypto.DigestMethod digestMethod, DigestAlgAndValueType destination)
         {
             using (var hashAlg = digestMethod.GetHashAlgorithm())
             {
@@ -46,7 +38,7 @@ namespace FirmaXadesNet.Utils
             }
         }
 
-        public static byte[] ComputeHashValue(byte[] value, FirmaXadesNet.Crypto.DigestMethod digestMethod)
+        public static byte[] ComputeHashValue(byte[] value, Crypto.DigestMethod digestMethod)
         {
             using (var alg = digestMethod.GetHashAlgorithm())
             {

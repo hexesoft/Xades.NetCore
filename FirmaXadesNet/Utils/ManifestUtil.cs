@@ -24,13 +24,10 @@
 using Microsoft.Xades;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography.Xml;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
-namespace FirmaXadesNet.Utils
+namespace Xades.NetCore.Utils
 {
     public class ManifestUtil
     {
@@ -43,7 +40,7 @@ namespace FirmaXadesNet.Utils
 
             Manifest manifest = new Manifest(id);
 
-            foreach(var reference in references)
+            foreach (var reference in references)
             {
                 manifest.ReferenceCollection.Add(reference);
             }

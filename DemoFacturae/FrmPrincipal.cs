@@ -21,12 +21,13 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet;
-using FirmaXadesNet.Crypto;
-using FirmaXadesNet.Signature.Parameters;
 using System;
 using System.IO;
 using System.Windows.Forms;
+using Xades.NetCore;
+using Xades.NetCore.Crypto;
+using Xades.NetCore.Signature.Parameters;
+using Xades.NetCore.Utils;
 
 namespace DemoFacturae
 {
@@ -54,7 +55,7 @@ namespace DemoFacturae
             parametros.SignerRole = new SignerRole();
             parametros.SignerRole.ClaimedRoles.Add("emisor");
 
-            using (parametros.Signer = new Signer(FirmaXadesNet.Utils.CertUtil.SelectCertificate()))
+            using (parametros.Signer = new Signer(CertUtil.SelectCertificate()))
             {
                 using (FileStream fs = new FileStream(ficheroFactura, FileMode.Open))
                 {

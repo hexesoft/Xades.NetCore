@@ -10,56 +10,48 @@ FirmaXadesNet è una libreria scritta in C# per .NET 5.0  per la creazione di fi
 CARATTERISTICHE
 ---------------
 
-- Creazione di firme of XAdES-BES, XAdES-EPES, XAdES-T y XAdES-XL.
+- Creazione di firme of XAdES-BES, XAdES-EPES, XAdES-T e XAdES-XL.
 
 - Utilizzo di tutti i tipi di certificati supportati da Windows, anche su Smart Card, Token Usb, CNS
 
-- Formati Supportati: Externally Detached, Internally Detached, Enveloped,Enveloping.
+- Formati Supportati: Externally Detached, Internally Detached, Enveloped, Enveloping.
 
 - Validazione dei Certificati tramite Authority OCSP o liste di revoca.
 
 - Supporto di cofirmatari e controfirmatari.
 
-- Supporto di RSA-SHA1, RSA-SHA256 y RSA-SHA512.
+- Supporto di RSA-SHA1, RSA-SHA256 e RSA-SHA512.
 
-All'interno della soluzione è presente un progetto con esempi di utilizzo della libreria. Alcuni degli esempi fanno uso del timestamp server  ACCV (Agencia de Tecnología y Certificación Electrónica, Spagna). 
+All'interno della soluzione è presente un progetto con esempi di utilizzo della libreria. Alcuni degli esempi fanno uso del timestamp server ACCV (Agencia de Tecnología y Certificación Electrónica, Spagna). 
 
-Come esempio di uitlizzo avviare il progetto TextFirmaXades, che consente di firmare digitalmente i file Xml.
-
+Come esempio di utilizzo avviare il progetto TextFirmaXades, che consente di firmare digitalmente i file Xml.
 
 **Esempio di utilizzo per firma Enveloped:**
 
 ```C#
-private void button3_Click(object sender, EventArgs e)
+    var xadesService = new XadesService();
+    var signatureParameters = new SignatureParameters 
     {
-        if (string.IsNullOrEmpty(nomeFileXml))
-        {
-            MessageBox.Show("l'Xml non è pronto per la firma.");
-            return;
-        }
+        SignatureMethod = SignatureMethod.RSAwithSHA512,
+        SigningDate = DateTime.Now,
+        SignaturePackaging = SignaturePackaging.ENVELOPED,
+    };
 
-        XadesService xadesService = new XadesService();
-        SignatureParameters parametri = new SignatureParameters();
-        parametri.SignatureMethod = SignatureMethod.RSAwithSHA512;
-        parametri.SigningDate = DateTime.Now;
+    // Test SignatureCommitment
+    var signatureCommitment = new SignatureCommitment(SignatureCommitmentType.ProofOfOrigin);
+    signatureParameters.SignatureCommitments.Add(sc);    
 
-        // Test SignatureCommitment
-        var sc = new SignatureCommitment(SignatureCommitmentType.ProofOfOrigin);
-        parametri.SignatureCommitments.Add(sc);
+    // Note: Use "CertUtil.SelectCertificate()" to choose certificate
+    var signingCertificate = new X509Certificate2(....);
+    using (signatureParameters.Signer = new Signer(signingCertificate))
+    {
+        using var fileStream = new FileStream(xmlFilePath, FileMode.Open);        
+        var signedXmlDocument = xadesService.Sign(fileStream, signatureParameters);        
 
-        parametri.SignaturePackaging = SignaturePackaging.ENVELOPED;
+        // Store
+        // signedDocument.Save(signedXmlFilePath);
 
-        using (parametri.Signer = new Signer(CertUtil.SelectCertificate()))
-        {
-            using (FileStream fs = new FileStream(nomeFileXml, FileMode.Open))
-            {
-                _signatureDocument = xadesService.Sign(fs, parametri);
-            }
-
-        }
-        _signatureDocument.Save(nomeFileXmlFirmato);
-        MessageBox.Show("File Firmato Correttamente.", "Firma XADES",
-            MessageBoxButtons.OK, MessageBoxIcon.Information);
-      
-    }
+        // ToString
+        // string signedXml = signedDocument.Document.OuterXml;
+    }        
 ```

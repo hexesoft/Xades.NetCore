@@ -21,14 +21,10 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
-namespace FirmaXadesNet.Signature.Parameters
+namespace Xades.NetCore.Signature.Parameters
 {
     public class SignatureCommitment
     {
@@ -44,10 +40,10 @@ namespace FirmaXadesNet.Signature.Parameters
 
         public SignatureCommitment(SignatureCommitmentType commitmentType)
         {
-            this.CommitmentType = commitmentType;
-            this.CommitmentTypeQualifiers = new List<XmlElement>();
+            CommitmentType = commitmentType;
+            CommitmentTypeQualifiers = new List<XmlElement>();
         }
-        
+
         #endregion
 
         #region Public methods
@@ -57,7 +53,7 @@ namespace FirmaXadesNet.Signature.Parameters
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);
 
-            this.CommitmentTypeQualifiers.Add(doc.DocumentElement);
+            CommitmentTypeQualifiers.Add(doc.DocumentElement);
         }
 
         #endregion

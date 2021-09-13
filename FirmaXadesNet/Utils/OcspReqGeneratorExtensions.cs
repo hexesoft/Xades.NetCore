@@ -25,20 +25,14 @@ using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Ocsp;
 using Org.BouncyCastle.Asn1.Pkcs;
 using Org.BouncyCastle.Asn1.X509;
-using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Ocsp;
-using Org.BouncyCastle.Security;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FirmaXadesNet.Utils
+namespace Xades.NetCore.Utils
 {
     /// <summary>
     /// Se extiende la clase OcspReqGenerator 
@@ -46,7 +40,7 @@ namespace FirmaXadesNet.Utils
     static class OcspReqGeneratorExtensions
     {
 
-        public static OcspReq Generate(this OcspReqGenerator ocspRegGenerator,                    
+        public static OcspReq Generate(this OcspReqGenerator ocspRegGenerator,
                     RSACryptoServiceProvider rsa,
                     X509Chain chain)
         {

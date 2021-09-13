@@ -24,7 +24,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 
-namespace FirmaXadesNet.Signature.Parameters
+namespace Xades.NetCore.Signature.Parameters
 {
     public class SignerRole
     {

@@ -21,23 +21,17 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet;
-using FirmaXadesNet.Crypto;
-using FirmaXadesNet.Signature;
-using FirmaXadesNet.Signature.Parameters;
-using FirmaXadesNet.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography.Xml;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using Xades.NetCore;
+using Xades.NetCore.Crypto;
+using Xades.NetCore.Signature;
+using Xades.NetCore.Signature.Parameters;
+using Xades.NetCore.Utils;
 
 namespace DemoFirmaManifest
 {
@@ -81,7 +75,7 @@ namespace DemoFirmaManifest
 
             SignatureDocument documentoFirma;
 
-            using (parametros.Signer = new Signer(FirmaXadesNet.Utils.CertUtil.SelectCertificate()))
+            using (parametros.Signer = new Signer(CertUtil.SelectCertificate()))
             {
                 using (MemoryStream ms = new MemoryStream())
                 {

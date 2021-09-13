@@ -21,13 +21,9 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FirmaXadesNet.Signature.Parameters
+namespace Xades.NetCore.Signature.Parameters
 {
     public class SignatureXPathExpression
     {

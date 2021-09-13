@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30615.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FirmaXadesNet", "FirmaXadesNet\FirmaXadesNet.csproj", "{84B87815-DD45-4C60-B343-C11D45847BDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xades.NetCore", "FirmaXadesNet\Xades.NetCore.csproj", "{84B87815-DD45-4C60-B343-C11D45847BDF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Xades", "Library\Microsoft.Xades.csproj", "{EE1DC57A-344A-4B0A-82CE-5FD328C14894}"
 EndProject
@@ -51,9 +51,9 @@ Global
 		{0643CA0A-214E-485E-9842-3145F249B350}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{0643CA0A-214E-485E-9842-3145F249B350}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{0643CA0A-214E-485E-9842-3145F249B350}.Debug|x86.Build.0 = Debug|Any CPU
-		{0643CA0A-214E-485E-9842-3145F249B350}.Release|Any CPU.ActiveCfg = Release|x86
-		{0643CA0A-214E-485E-9842-3145F249B350}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{0643CA0A-214E-485E-9842-3145F249B350}.Release|Mixed Platforms.Build.0 = Release|x86
+		{0643CA0A-214E-485E-9842-3145F249B350}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0643CA0A-214E-485E-9842-3145F249B350}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0643CA0A-214E-485E-9842-3145F249B350}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0643CA0A-214E-485E-9842-3145F249B350}.Release|x86.ActiveCfg = Release|x86
 		{0643CA0A-214E-485E-9842-3145F249B350}.Release|x86.Build.0 = Release|x86
 		{34F914A8-5116-45E3-B56A-1246E8C97EBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -62,9 +62,9 @@ Global
 		{34F914A8-5116-45E3-B56A-1246E8C97EBC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{34F914A8-5116-45E3-B56A-1246E8C97EBC}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{34F914A8-5116-45E3-B56A-1246E8C97EBC}.Debug|x86.Build.0 = Debug|Any CPU
-		{34F914A8-5116-45E3-B56A-1246E8C97EBC}.Release|Any CPU.ActiveCfg = Release|x86
-		{34F914A8-5116-45E3-B56A-1246E8C97EBC}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{34F914A8-5116-45E3-B56A-1246E8C97EBC}.Release|Mixed Platforms.Build.0 = Release|x86
+		{34F914A8-5116-45E3-B56A-1246E8C97EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34F914A8-5116-45E3-B56A-1246E8C97EBC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{34F914A8-5116-45E3-B56A-1246E8C97EBC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{34F914A8-5116-45E3-B56A-1246E8C97EBC}.Release|x86.ActiveCfg = Release|x86
 		{34F914A8-5116-45E3-B56A-1246E8C97EBC}.Release|x86.Build.0 = Release|x86
 		{1AD6C6B7-725B-4DF3-A377-FA8AEECA3160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -73,7 +73,6 @@ Global
 		{1AD6C6B7-725B-4DF3-A377-FA8AEECA3160}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{1AD6C6B7-725B-4DF3-A377-FA8AEECA3160}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{1AD6C6B7-725B-4DF3-A377-FA8AEECA3160}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1AD6C6B7-725B-4DF3-A377-FA8AEECA3160}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1AD6C6B7-725B-4DF3-A377-FA8AEECA3160}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1AD6C6B7-725B-4DF3-A377-FA8AEECA3160}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1AD6C6B7-725B-4DF3-A377-FA8AEECA3160}.Release|x86.ActiveCfg = Release|Any CPU
@@ -84,7 +83,6 @@ Global
 		{39C4C6B8-7006-45FA-A790-8F02196D641D}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{39C4C6B8-7006-45FA-A790-8F02196D641D}.Debug|x86.Build.0 = Debug|Any CPU
 		{39C4C6B8-7006-45FA-A790-8F02196D641D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39C4C6B8-7006-45FA-A790-8F02196D641D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{39C4C6B8-7006-45FA-A790-8F02196D641D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{39C4C6B8-7006-45FA-A790-8F02196D641D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{39C4C6B8-7006-45FA-A790-8F02196D641D}.Release|x86.ActiveCfg = Release|Any CPU

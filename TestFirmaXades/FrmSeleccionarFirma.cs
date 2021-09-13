@@ -21,8 +21,8 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet.Signature;
 using System.Windows.Forms;
+using Xades.NetCore.Signature;
 
 namespace TestFirmaXades
 {

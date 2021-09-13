@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -42,7 +42,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FirmaXadesNet\FirmaXadesNet.csproj" />
+    <ProjectReference Include="..\FirmaXadesNet\Xades.NetCore.csproj" />
     <ProjectReference Include="..\Library\Microsoft.Xades.csproj" />
   </ItemGroup>
   <ItemGroup>

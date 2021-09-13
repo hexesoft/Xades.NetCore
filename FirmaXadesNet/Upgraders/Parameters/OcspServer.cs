@@ -22,14 +22,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using Org.BouncyCastle.Asn1.X509;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FirmaXadesNet.Upgraders.Parameters
+namespace Xades.NetCore.Upgraders.Parameters
 {
     public class OcspServer
     {
@@ -51,12 +46,12 @@ namespace FirmaXadesNet.Upgraders.Parameters
 
         public OcspServer(string url)
         {
-            this.Url = url;
+            Url = url;
         }
 
         public void SetRequestorName(int tag, string name)
         {
-            this.RequestorName = new GeneralName(tag, name);
+            RequestorName = new GeneralName(tag, name);
         }
     }
 }

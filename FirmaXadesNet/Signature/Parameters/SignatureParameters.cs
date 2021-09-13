@@ -21,11 +21,11 @@
 // 
 // --------------------------------------------------------------------------------------------------------------------
 
-using FirmaXadesNet.Crypto;
 using System;
 using System.Collections.Generic;
+using Xades.NetCore.Crypto;
 
-namespace FirmaXadesNet.Signature.Parameters
+namespace Xades.NetCore.Signature.Parameters
 {
     public enum SignaturePackaging
     {
@@ -35,7 +35,7 @@ namespace FirmaXadesNet.Signature.Parameters
         ENVELOPED,
         ENVELOPING
     }
-   
+
     public class SignatureParameters
     {
         #region Private variables
@@ -81,10 +81,10 @@ namespace FirmaXadesNet.Signature.Parameters
 
         public SignatureParameters()
         {
-            this.XPathTransformations = new List<SignatureXPathExpression>();
-            this.SignatureCommitments = new List<SignatureCommitment>();
-            this.SignatureMethod = _defaultSignatureMethod;
-            this.DigestMethod = _defaultDigestMethod;
+            XPathTransformations = new List<SignatureXPathExpression>();
+            SignatureCommitments = new List<SignatureCommitment>();
+            SignatureMethod = _defaultSignatureMethod;
+            DigestMethod = _defaultDigestMethod;
         }
 
         #endregion

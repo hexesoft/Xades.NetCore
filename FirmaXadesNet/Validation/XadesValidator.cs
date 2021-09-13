@@ -22,8 +22,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
-using FirmaXadesNet.Signature;
-using FirmaXadesNet.Utils;
 using Microsoft.Xades;
 using Org.BouncyCastle.Cms;
 using Org.BouncyCastle.Tsp;
@@ -32,8 +30,10 @@ using System;
 using System.Collections;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
+using Xades.NetCore.Signature;
+using Xades.NetCore.Utils;
 
-namespace FirmaXadesNet.Validation
+namespace Xades.NetCore.Validation
 {
     class XadesValidator
     {
@@ -49,22 +49,22 @@ namespace FirmaXadesNet.Validation
              * 
              * La validación de perfiles -C, -X, -XL y -A esta fuera del ámbito de este proyecto.
              */
-            
+
             ValidationResult result = new ValidationResult();
-                       
+
             try
-            {                
+            {
                 // Verifica las huellas de las referencias y la firma
                 sigDocument.XadesSignature.CheckXmldsigSignature();
             }
-            catch (Exception ex)
+            catch
             {
                 result.IsValid = false;
                 result.Message = "La verificación de la firma no ha sido satisfactoria";
 
                 return result;
             }
-            
+
             if (sigDocument.XadesSignature.UnsignedProperties.UnsignedSignatureProperties.SignatureTimeStampCollection.Count > 0)
             {
                 // Se comprueba el sello de tiempo
@@ -73,7 +73,7 @@ namespace FirmaXadesNet.Validation
                 TimeStampToken token = new TimeStampToken(new CmsSignedData(timeStamp.EncapsulatedTimeStamp.PkiData));
 
                 byte[] tsHashValue = token.TimeStampInfo.GetMessageImprintDigest();
-                
+
                 //TODO: Verificare  
                 // Crypto.DigestMethod tsDigestMethod = Crypto.DigestMethod.GetByOid(token.TimeStampInfo.HashAlgorithm.ObjectID.Id);
                 Crypto.DigestMethod tsDigestMethod = Crypto.DigestMethod.GetByOid(token.TimeStampInfo.HashAlgorithm.Algorithm.Id);
