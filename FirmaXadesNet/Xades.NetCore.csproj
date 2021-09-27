@@ -3,7 +3,6 @@
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 		<Nullable>enable</Nullable>
-		<LangVersion>10.0</LangVersion>
 		<OutputType>Library</OutputType>
 		<Authors>Hexesoft srl, Giacomo Policicchio, Centro de Transferencia de Tecnología - Forja CTT</Authors>
 		<Copyright>Hexesoft srl, Giacomo Policicchio, Centro de Transferencia de Tecnología - Forja CTT</Copyright>
