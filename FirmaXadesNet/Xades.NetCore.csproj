@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
-		<Nullable>enable</Nullable>
+		<Nullable>annotations</Nullable>
 		<OutputType>Library</OutputType>
 		<Authors>Hexesoft srl, Giacomo Policicchio, Centro de Transferencia de Tecnología - Forja CTT</Authors>
 		<Copyright>Hexesoft srl, Giacomo Policicchio, Centro de Transferencia de Tecnología - Forja CTT</Copyright>
@@ -23,7 +23,7 @@
 	<ItemGroup>
 		<PackageReference Include="BouncyCastle.NetCore" Version="1.8.8" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-		<PackageReference Include="Microsoft.Xades" Version="1.0.0" />
+		<PackageReference Include="Microsoft.Xades" Version="1.0.1" />
 		<PackageReference Include="System.Data.DataSetExtensions" Version="4.6.0-preview3.19128.7" />
 		<PackageReference Include="System.Security.Cryptography.Xml" Version="5.0.0" />
 	</ItemGroup>
