@@ -5,23 +5,15 @@
 		<LangVersion>10.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<OutputType>Library</OutputType>
-		<UseApplicationTrust>false</UseApplicationTrust>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<DocumentationFile>doc\XAdES.xml</DocumentationFile>
-		<PackageId>$(AssemblyName)</PackageId>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Reference Update="System">
-			<Name>System</Name>
-		</Reference>
-		<Reference Update="System.Data">
-			<Name>System.Data</Name>
-		</Reference>
-		<Reference Update="System.Xml">
-			<Name>System.XML</Name>
-		</Reference>
+		<Reference Update="System" />
+		<Reference Update="System.Data" />
+		<Reference Update="System.Xml" />
 	</ItemGroup>
 
 	<ItemGroup>
