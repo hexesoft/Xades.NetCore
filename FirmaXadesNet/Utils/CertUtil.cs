@@ -59,49 +59,54 @@ namespace Xades.NetCore.Utils
         /// <returns></returns>
         public static X509Certificate2 SelectCertificate(string message = null, string title = null)
         {
-            X509Certificate2 cert = null;
+            // Note: X509Certificate2UI was moved into windows dedicated assembly in net6-rc2
+            //       and, for now, we don't use this method and UI-related assembly
+            throw new NotImplementedException();
 
-            try
-            {
-                // Open the store of personal certificates.
-                X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-                store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+            //X509Certificate2 cert = null;
 
-                X509Certificate2Collection collection = store.Certificates;
-                X509Certificate2Collection fcollection = collection.Find(X509FindType.FindByTimeValid, DateTime.Now, false);
+            //try
+            //{
+            //    // Open the store of personal certificates.
+            //    X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+            //    store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
 
-                if (string.IsNullOrEmpty(message))
-                {
-                    message = "Seleccione un certificado.";
-                }
+            //    X509Certificate2Collection collection = store.Certificates;
+            //    X509Certificate2Collection fcollection = collection.Find(X509FindType.FindByTimeValid, DateTime.Now, false);
 
-                if (string.IsNullOrEmpty(title))
-                {
-                    title = "Firmar archivo";
-                }
+            //    if (string.IsNullOrEmpty(message))
+            //    {
+            //        message = "Seleccione un certificado.";
+            //    }
 
-                X509Certificate2Collection scollection = X509Certificate2UI.SelectFromCollection(fcollection, title, message, X509SelectionFlag.SingleSelection);
+            //    if (string.IsNullOrEmpty(title))
+            //    {
+            //        title = "Firmar archivo";
+            //    }
 
-                if (scollection != null && scollection.Count == 1)
-                {
-                    cert = scollection[0];
+            //    X509Certificate2Collection scollection = X509Certificate2UI.SelectFromCollection(fcollection, title, message, X509SelectionFlag.SingleSelection);
 
-                    if (cert.HasPrivateKey == false)
-                    {
-                        throw new Exception("El certificado no tiene asociada una clave privada.");
-                    }
-                }
+            //    if (scollection != null && scollection.Count == 1)
+            //    {
+            //        cert = scollection[0];
 
-                store.Close();
-            }
-            catch (Exception ex)
-            {
-                // Thx @rasputino
-                throw new Exception("No se ha podido obtener la clave privada.", ex);
-            }
+            //        if (cert.HasPrivateKey == false)
+            //        {
+            //            throw new Exception("El certificado no tiene asociada una clave privada.");
+            //        }
+            //    }
 
-            return cert;
+            //    store.Close();
+            //}
+            //catch (Exception ex)
+            //{
+            //    // Thx @rasputino
+            //    throw new Exception("No se ha podido obtener la clave privada.", ex);
+            //}
+
+            //return cert;
         }
+
         //TODO: da Verificare Nuova Funzione da Fork
         /// <summary>
 		/// Validates certificate chain, with manual validation of the rot certificate (passed as parameter).
