@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Nullable>annotations</Nullable>
-		<LangVersion>10.0</LangVersion>
+		<LangVersion>preview</LangVersion>
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<DocumentationFile>doc\XAdES.xml</DocumentationFile>
@@ -30,6 +30,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Security.Cryptography.Xml" Version="6.0.1" />
+		<PackageReference Include="System.Security.Cryptography.Xml" Version="7.0.0-rc.2.22472.3" />
 	</ItemGroup>
 </Project>
