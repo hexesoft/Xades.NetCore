@@ -20,7 +20,6 @@
 		<GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
 		<Version Condition="'$(BUILD_BUILDNUMBER)' == ''">$([System.DateTime]::Now.ToString('yyyy.M.d'))-dev</Version>
 		<Version Condition="'$(BUILD_BUILDNUMBER)' != ''">$(BUILD_BUILDNUMBER)</Version>
-		<Version>2022.10.18.1</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
