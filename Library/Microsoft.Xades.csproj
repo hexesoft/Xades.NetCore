@@ -4,20 +4,14 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Nullable>annotations</Nullable>
 		<LangVersion>preview</LangVersion>
+		<PackageId>Hexesoft.Microsoft.Xades</PackageId>
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<DocumentationFile>doc\XAdES.xml</DocumentationFile>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<AssemblyVersion>1.0.2</AssemblyVersion>
-		<FileVersion>1.0.2</FileVersion>
-		<Version>1.0.2</Version>
+		<GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
+		<Version Condition="'$(BUILD_BUILDNUMBER)' == ''">$([System.DateTime]::Now.ToString('yyyy.M.d'))-dev</Version>
+		<Version Condition="'$(BUILD_BUILDNUMBER)' != ''">$(BUILD_BUILDNUMBER)</Version>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<Reference Update="System" />
-		<Reference Update="System.Data" />
-		<Reference Update="System.Xml" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<EmbeddedResource Include="xmldsig-core-schema.xsd" />
