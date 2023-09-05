@@ -95,8 +95,7 @@ namespace Xades.NetCore.Utils
                 try
                 {
                     byte[] encoded = tbsReq.GetEncoded();
-
-                    byte[] signedData = rsa.SignData(encoded, new SHA1CryptoServiceProvider());
+                    byte[] signedData = rsa.SignData(encoded, SHA1.Create());
 
                     bitSig = new DerBitString(signedData);
                 }

@@ -30,7 +30,6 @@ using Org.BouncyCastle.Ocsp;
 using Org.BouncyCastle.Tsp;
 using Org.BouncyCastle.X509;
 using Org.BouncyCastle.X509.Extension;
-using Org.BouncyCastle.X509.Store;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -378,63 +377,70 @@ namespace Xades.NetCore.Upgraders
         /// <summary>
         /// Inserta y valida los certificados del servidor de sellado de tiempo.
         /// </summary>
-        /// <param name="unsignedProperties"></param>
         private void AddTSACertificates(UnsignedProperties unsignedProperties, IEnumerable<OcspServer> ocspServers, IEnumerable<X509Crl> crlList, Crypto.DigestMethod digestMethod, bool addCertificateOcspUrl)
         {
-            TimeStampToken token = new TimeStampToken(new CmsSignedData(unsignedProperties.UnsignedSignatureProperties.SignatureTimeStampCollection[0].EncapsulatedTimeStamp.PkiData));
-            IX509Store store = token.GetCertificates("Collection");
+            TimeStampToken token = new(new CmsSignedData(unsignedProperties.UnsignedSignatureProperties.SignatureTimeStampCollection[0].EncapsulatedTimeStamp.PkiData));
 
-            SignerID signerId = token.SignerID;
-
-            List<X509Certificate2> tsaCerts = new List<X509Certificate2>();
-            foreach (var tsaCert in store.GetMatches(null))
+            var store = token.GetCertificates();
+            var tsaCerts = new List<X509Certificate2>();
+            foreach (var tsaCert in store.EnumerateMatches(null))
             {
-                X509Certificate2 cert = new X509Certificate2(((Org.BouncyCastle.X509.X509Certificate)tsaCert).GetEncoded());
-                tsaCerts.Add(cert);
+                tsaCerts.Add(
+                    new(tsaCert.GetEncoded()));
             }
 
-            X509Certificate2 startCert = DetermineStartCert(tsaCerts.ToArray());
-            AddCertificate(startCert, unsignedProperties, true, ocspServers, crlList, digestMethod, addCertificateOcspUrl, tsaCerts.ToArray());
+            AddCertificate(
+                DetermineStartCert(tsaCerts.ToArray()),
+                unsignedProperties,
+                addCert: true,
+                ocspServers,
+                crlList,
+                digestMethod,
+                addCertificateOcspUrl,
+                tsaCerts.ToArray());
         }
 
-        private void TimeStampCertRefs(SignatureDocument signatureDocument, UpgradeParameters parameters)
+        private static void TimeStampCertRefs(SignatureDocument signatureDocument, UpgradeParameters parameters)
         {
-            TimeStamp xadesXTimeStamp;
-            ArrayList signatureValueElementXpaths;
-            byte[] signatureValueHash;
-
-            XmlElement nodoFirma = signatureDocument.XadesSignature.GetSignatureElement();
-
-            XmlNamespaceManager nm = new XmlNamespaceManager(signatureDocument.Document.NameTable);
+            var nm = new XmlNamespaceManager(signatureDocument.Document.NameTable);
             nm.AddNamespace("xades", XadesSignedXml.XadesNamespaceUri);
             nm.AddNamespace("ds", SignedXml.XmlDsigNamespaceUrl);
 
-            XmlNode xmlCompleteCertRefs = nodoFirma.SelectSingleNode("ds:Object/xades:QualifyingProperties/xades:UnsignedProperties/xades:UnsignedSignatureProperties/xades:CompleteCertificateRefs", nm);
+            var xmlCompleteCertRefs = signatureDocument.XadesSignature
+                .GetSignatureElement()
+                .SelectSingleNode("ds:Object/xades:QualifyingProperties/xades:UnsignedProperties/xades:UnsignedSignatureProperties/xades:CompleteCertificateRefs", nm);
 
-            if (xmlCompleteCertRefs == null)
+            if (xmlCompleteCertRefs is null)
             {
                 signatureDocument.UpdateDocument();
             }
 
-            signatureValueElementXpaths = new ArrayList();
-            signatureValueElementXpaths.Add("ds:SignatureValue");
-            signatureValueElementXpaths.Add("ds:Object/xades:QualifyingProperties/xades:UnsignedProperties/xades:UnsignedSignatureProperties/xades:SignatureTimeStamp");
-            signatureValueElementXpaths.Add("ds:Object/xades:QualifyingProperties/xades:UnsignedProperties/xades:UnsignedSignatureProperties/xades:CompleteCertificateRefs");
-            signatureValueElementXpaths.Add("ds:Object/xades:QualifyingProperties/xades:UnsignedProperties/xades:UnsignedSignatureProperties/xades:CompleteRevocationRefs");
-            signatureValueHash = DigestUtil.ComputeHashValue(XMLUtil.ComputeValueOfElementList(signatureDocument.XadesSignature, signatureValueElementXpaths), parameters.DigestMethod);
+            var signatureValueElementXpaths = new ArrayList
+            {
+                "ds:SignatureValue",
+                "ds:Object/xades:QualifyingProperties/xades:UnsignedProperties/xades:UnsignedSignatureProperties/xades:SignatureTimeStamp",
+                "ds:Object/xades:QualifyingProperties/xades:UnsignedProperties/xades:UnsignedSignatureProperties/xades:CompleteCertificateRefs",
+                "ds:Object/xades:QualifyingProperties/xades:UnsignedProperties/xades:UnsignedSignatureProperties/xades:CompleteRevocationRefs"
+            };
 
-            byte[] tsa = parameters.TimeStampClient.GetTimeStamp(signatureValueHash, parameters.DigestMethod, true);
-
-            xadesXTimeStamp = new TimeStamp("SigAndRefsTimeStamp");
-            xadesXTimeStamp.Id = "SigAndRefsStamp-" + signatureDocument.XadesSignature.Signature.Id;
-            xadesXTimeStamp.EncapsulatedTimeStamp.PkiData = tsa;
+            var xadesXTimeStamp = new TimeStamp("SigAndRefsTimeStamp")
+            {
+                Id = "SigAndRefsStamp-" + signatureDocument.XadesSignature.Signature.Id
+            };
+            xadesXTimeStamp.EncapsulatedTimeStamp.PkiData = parameters.TimeStampClient
+                .GetTimeStamp(DigestUtil
+                    .ComputeHashValue(XMLUtil
+                        .ComputeValueOfElementList(
+                            signatureDocument.XadesSignature,
+                            signatureValueElementXpaths),
+                        parameters.DigestMethod),
+                    parameters.DigestMethod,
+                    true);
             xadesXTimeStamp.EncapsulatedTimeStamp.Id = "SigAndRefsStamp-" + Guid.NewGuid().ToString();
-            UnsignedProperties unsignedProperties = signatureDocument.XadesSignature.UnsignedProperties;
 
+            var unsignedProperties = signatureDocument.XadesSignature.UnsignedProperties;
             unsignedProperties.UnsignedSignatureProperties.RefsOnlyTimeStampFlag = false;
             unsignedProperties.UnsignedSignatureProperties.SigAndRefsTimeStampCollection.Add(xadesXTimeStamp);
-
-
             signatureDocument.XadesSignature.UnsignedProperties = unsignedProperties;
         }
 

@@ -26,14 +26,16 @@ using Org.BouncyCastle.Asn1.Ocsp;
 using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Ocsp;
-using Org.BouncyCastle.X509;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using Xades.NetCore.Utils;
+using BouncyCastleX509Certificate = Org.BouncyCastle.X509.X509Certificate;
+using BouncyCastleX509Extension = Org.BouncyCastle.Asn1.X509.X509Extension;
 
 namespace Xades.NetCore.Clients
 {
@@ -56,8 +58,8 @@ namespace Xades.NetCore.Clients
         /// <param name="issuerCert"></param>
         /// <param name="url"></param>
         /// <returns></returns>
-        public byte[] QueryBinary(X509Certificate eeCert, X509Certificate issuerCert, string url, GeneralName requestorName = null,
-            System.Security.Cryptography.X509Certificates.X509Certificate2 signCertificate = null)
+        public byte[] QueryBinary(BouncyCastleX509Certificate eeCert, BouncyCastleX509Certificate issuerCert, string url, GeneralName requestorName = null,
+            X509Certificate2 signCertificate = null)
         {
             OcspReq req = GenerateOcspRequest(issuerCert, eeCert.SerialNumber, requestorName, signCertificate);
 
@@ -71,7 +73,7 @@ namespace Xades.NetCore.Clients
         /// </summary>
         /// <param name="cert"></param>
         /// <returns></returns>
-        public string GetAuthorityInformationAccessOcspUrl(X509Certificate cert)
+        public string GetAuthorityInformationAccessOcspUrl(BouncyCastleX509Certificate cert)
         {
             List<string> ocspUrls = new List<string>();
 
@@ -190,7 +192,7 @@ namespace Xades.NetCore.Clients
             stream.Close();
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream respStream = response.GetResponseStream();
-            using (MemoryStream ms = new MemoryStream())
+            using (MemoryStream ms = new())
             {
                 respStream.CopyTo(ms);
                 resp = ms.ToArray();
@@ -201,7 +203,7 @@ namespace Xades.NetCore.Clients
         }
 
 
-        protected static Asn1Object GetExtensionValue(X509Certificate cert,
+        protected static Asn1Object GetExtensionValue(BouncyCastleX509Certificate cert,
                 string oid)
         {
             if (cert == null)
@@ -222,15 +224,15 @@ namespace Xades.NetCore.Clients
         }
 
 
-        private OcspReq GenerateOcspRequest(X509Certificate issuerCert, BigInteger serialNumber, GeneralName requestorName,
-            System.Security.Cryptography.X509Certificates.X509Certificate2 signCertificate)
+        private OcspReq GenerateOcspRequest(BouncyCastleX509Certificate issuerCert, BigInteger serialNumber, GeneralName requestorName,
+            X509Certificate2 signCertificate)
         {
             CertificateID id = new CertificateID(CertificateID.HashSha1, issuerCert, serialNumber);
             return GenerateOcspRequest(id, requestorName, signCertificate);
         }
 
         private OcspReq GenerateOcspRequest(CertificateID id, GeneralName requestorName,
-            System.Security.Cryptography.X509Certificates.X509Certificate2 signCertificate)
+            X509Certificate2 signCertificate)
         {
             OcspReqGenerator ocspRequestGenerator = new OcspReqGenerator();
 
@@ -241,19 +243,21 @@ namespace Xades.NetCore.Clients
                 ocspRequestGenerator.SetRequestorName(requestorName);
             }
 
-            ArrayList oids = new ArrayList();
-            Hashtable values = new Hashtable();
-
-            oids.Add(OcspObjectIdentifiers.PkixOcspNonce);
 
             _nonceAsn1OctetString = new DerOctetString(new DerOctetString(BigInteger.ValueOf(DateTime.Now.Ticks).ToByteArray()));
-
-            values.Add(OcspObjectIdentifiers.PkixOcspNonce, new X509Extension(false, _nonceAsn1OctetString));
+            var oids = new List<DerObjectIdentifier>
+            {
+                OcspObjectIdentifiers.PkixOcspNonce,
+            };
+            var values = new Dictionary<DerObjectIdentifier, BouncyCastleX509Extension>
+            {
+                [OcspObjectIdentifiers.PkixOcspNonce] = new BouncyCastleX509Extension(false, _nonceAsn1OctetString),
+            };
             ocspRequestGenerator.SetRequestExtensions(new X509Extensions(oids, values));
 
             if (signCertificate != null)
             {
-                return ocspRequestGenerator.Generate((RSACryptoServiceProvider)signCertificate.PrivateKey, CertUtil.GetCertChain(signCertificate));
+                return ocspRequestGenerator.Generate((RSACryptoServiceProvider)signCertificate.GetRSAPrivateKey(), CertUtil.GetCertChain(signCertificate));
             }
             else
             {

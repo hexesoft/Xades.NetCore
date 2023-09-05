@@ -94,7 +94,7 @@ namespace Xades.NetCore.Crypto
 
         private void SetSigningKey(X509Certificate2 certificate)
         {
-            _signingKey = certificate.PrivateKey!;
+            _signingKey = certificate.GetRSAPrivateKey();
             _disposeCryptoProvider = false;
 
             // Note: In .net core the certificate keys have platform specific implementation
