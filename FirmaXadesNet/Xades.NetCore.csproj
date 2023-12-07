@@ -24,7 +24,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="BouncyCastle.NetCore" Version="2.2.1" />
-		<PackageReference Include="Hexesoft.Microsoft.Xades" Version="2023.10.3.1" />
+		<PackageReference Include="Hexesoft.Microsoft.Xades" Version="2023.12.7.1" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="System.Data.DataSetExtensions" Version="4.6.0-preview3.19128.7" />
 		<PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.0" />
