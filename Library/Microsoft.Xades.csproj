@@ -4,10 +4,13 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Nullable>annotations</Nullable>
 		<LangVersion>preview</LangVersion>
-		<PackageId>Hexesoft.Microsoft.Xades</PackageId>
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<DocumentationFile>doc\XAdES.xml</DocumentationFile>
+
+		<!-- Hexesoft -->
+		<PackageId>Hexesoft.Microsoft.Xades</PackageId>
+		<PackageProjectUrl>https://github.com/hexesoft/Xades.NetCore</PackageProjectUrl>
 		<GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
 		<Version Condition="'$(BUILD_BUILDNUMBER)' == ''">$([System.DateTime]::Now.ToString('yyyy.M.d'))-dev</Version>
 		<Version Condition="'$(BUILD_BUILDNUMBER)' != ''">$(BUILD_BUILDNUMBER)</Version>

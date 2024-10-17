@@ -10,12 +10,14 @@
 		<Description>Library with utilities for XAdES signature. Private hexesoft project forked from https://github.com/pgiacomo69/Xades.NetCore</Description>
 		<AssemblyName>Xades.NetCore</AssemblyName>
 		<RootNamespace>Xades.NetCore</RootNamespace>
-		<PackageId>Hexesoft.Xades.NetCore</PackageId>
-		<PackageProjectUrl>https://github.com/hexesoft/Xades.NetCore</PackageProjectUrl>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/hexesoft/Xades.NetCore</RepositoryUrl>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<NoPackageAnalysis>true</NoPackageAnalysis>
+
+		<!-- Hexesoft -->
+		<PackageId>Hexesoft.Xades.NetCore</PackageId>
+		<PackageProjectUrl>https://github.com/hexesoft/Xades.NetCore</PackageProjectUrl>
 		<IsPackable>true</IsPackable>
 		<GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
 		<Version Condition="'$(BUILD_BUILDNUMBER)' == ''">$([System.DateTime]::Now.ToString('yyyy.M.d'))-dev</Version>
@@ -24,9 +26,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="BouncyCastle.NetCore" Version="2.2.1" />
-		<PackageReference Include="Hexesoft.Microsoft.Xades" Version="2023.12.7.1" />
-		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-		<PackageReference Include="System.Data.DataSetExtensions" Version="4.6.0-preview3.19128.7" />
-		<PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Library\Microsoft.Xades.csproj" />
 	</ItemGroup>
 </Project>
